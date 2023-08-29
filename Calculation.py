@@ -8,9 +8,8 @@ def main():
     primeAnswer = multiply(prime1, prime2)
     print (primeAnswer)
 
-    factor(primeAnswer)
-
-
+    final = factor(primeAnswer)
+    print (final)
 
 
 def multiply(prime1, prime2):
@@ -21,20 +20,34 @@ def multiply(prime1, prime2):
     return primeAnswer
 
 
-
-def factor(primeAnswer):
-    factoredNumbers = []
+def factor(primeAnswer, divisor = 2):
+    factors = []
     startFacTimer = time.perf_counter()
-    for i in range(2, int(math.sqrt(primeAnswer))):
-        isPrime = primeAnswer % i
-        print(isPrime)
-        if isPrime == 1 or isPrime == primeAnswer:
-            print ("Prime number")
+    while primeAnswer > 1 and divisor * divisor <= primeAnswer:
+        if primeAnswer% divisor == 0:
+            factors.append(divisor)
+            return factors + factor(primeAnswer // divisor, divisor)
+        divisor += 1
+        print(divisor)
     stopFacTimer = time.perf_counter()
-
     print(f"Finished in {stopFacTimer - startFacTimer: .04f} seconds")
-    print(factoredNumbers)
-    
+
+
+def _isPrime(primeAnswer):
+    if primeAnswer <= 1:
+        return False
+    if primeAnswer <=3:
+        return True
+    if primeAnswer % 2 == 0 or primeAnswer % 3 == 0:
+        return False
+    i = 5
+    while i * i <= primeAnswer:
+        if primeAnswer % i == 0 or primeAnswer % (i + 2) == 0:
+            return False
+        i+= 6
+    return True
+
+
 
 
 if __name__ == "__main__":
